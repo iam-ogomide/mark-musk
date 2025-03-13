@@ -92,14 +92,10 @@ export class VectorStoreService {
     }
   }
 
-  // In production, consider using a server endpoint for this
+  
   private async generateEmbedding(text: string): Promise<number[]> {
     try {
-      // Option 1: Use a server endpoint (recommended for production)
-      // return this.http.post<number[]>('/api/generate-embedding', { text }).toPromise();
       
-      // Option 2: For demo purposes, use a simplified embedding approach
-      // THIS IS NOT EQUIVALENT TO THE PYTHON EMBEDDINGS
       const embedding = new Array(this.MODEL_DIMENSIONS).fill(0);
       
       // Hash the text to create a pseudo-embedding

@@ -12,14 +12,14 @@ export interface Message {
 
 interface LMStudioCompletionRequest {
   model: string;
-  prompt: string;   // ✅ FIXED: Use "prompt" instead of "messages"
+  prompt: string;   
   temperature: number;
   max_tokens: number;
   stream: boolean;
 }
 
 interface LMStudioCompletionResponse {
-  choices?: { text?: string }[]; // ✅ FIXED: OpenAI format uses `text`, not `message.content`
+  choices?: { text?: string }[]; 
 }
 
 @Injectable({
@@ -111,7 +111,7 @@ USER QUERY: ${query}
 
       const requestBody: LMStudioCompletionRequest = {
         model: environment.lmStudioModel,
-        prompt: prompt,  // ✅ FIXED: Use `prompt` instead of `messages`
+        prompt: prompt,  // FIXED: Use `prompt` instead of `messages`
         temperature: 0.7,
         max_tokens: 1024,
         stream: false
@@ -120,7 +120,7 @@ USER QUERY: ${query}
       console.log("🟢 Sending request to LM Studio:", JSON.stringify(requestBody, null, 2));
 
       const response = await this.http.post<LMStudioCompletionResponse>(
-        environment.lmStudioEndpoint, // ✅ FIXED: Ensure correct endpoint
+        environment.lmStudioEndpoint, //  FIXED: Ensure correct endpoint
         requestBody,
         { headers }
       ).toPromise();
@@ -144,7 +144,7 @@ USER QUERY: ${query}
 
       const requestBody = {
         model: environment.lmStudioModel,
-        prompt: "Hello!",  // ✅ FIXED: Use `prompt`
+        prompt: "Hello!",  // FIXED: Use `prompt`
         temperature: 0.7,
         max_tokens: 1024,
         stream: false

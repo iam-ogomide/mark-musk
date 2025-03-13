@@ -110,7 +110,7 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
       let highlightedCode;
       
       try {
-        // Use the correct highlight.js API
+        //  highlight.js API
         highlightedCode = hljs.highlight(code.trim(), { language: lang }).value;
       } catch (e) {
         // Fallback if language not supported
@@ -129,7 +129,7 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
   }
 
-  // Add this method to your ChatComponent class
+  // Method to test the connection with llm model 
 async testConnection(): Promise<void> {
   this.isLoading = true;
   try {
