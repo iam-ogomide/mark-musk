@@ -20,7 +20,7 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
-    "@huggingface/inference": "^3.5.2",
+    "@huggingface/inference": "^2.6.1",
     "chromadb": "^2.0.1",
     "highlight.js": "^11.11.1",
     "rxjs": "~7.5.0",

@@ -1,1 +1,84 @@
-<p>chat works!</p>
+<div class="chat-container">
+    <div class="sidebar">
+      <div class="logo">
+        <h1>Mark Musk</h1>
+        <p>CreditChek Assistant</p>
+      </div>
+      
+      <div class="language-selector">
+        <h3>Preferred Language</h3>
+        <ul>
+          <li *ngFor="let lang of languages"
+              [class.active]="preferredLanguage === lang.value"
+              (click)="changePreferredLanguage(lang.value)">
+            {{ lang.label }}
+          </li>
+        </ul>
+      </div>
+      
+      <div class="info">
+        <h3>About</h3>
+        <p>I help developers integrate with CreditChek's REST APIs 10x faster.</p>
+        <p>Ask me about endpoints, authentication, parameters, and I'll provide documentation and code examples.</p>
+      </div>
+      
+      <div class="status-info" [class.ready]="isVectorStoreReady">
+        <span class="status-dot"></span>
+        <span class="status-text">{{ isVectorStoreReady ? 'Knowledge Base Ready' : 'Loading Knowledge Base...' }}</span>
+      </div>
+    </div>
+    
+    <div class="chat-area">
+      <div class="chat-messages" #chatContainer>
+        <div *ngFor="let message of messages" 
+             [ngClass]="{'message': true, 'user-message': message.role === 'user', 'assistant-message': message.role === 'assistant'}">
+          <div class="message-avatar">
+            <img [src]="message.role === 'user' ? '../../../assets/nezuko.jpg' : '../../../assets/naruto.png'" 
+                 [alt]="message.role === 'user' ? 'User' : 'Mark Musk'">
+          </div>
+          <div class="message-content">
+            <div class="message-header">
+              <span class="message-sender">{{ message.role === 'user' ? 'You' : 'Mark Musk' }}</span>
+              <span class="message-time">{{ message.timestamp | date:'shortTime' }}</span>
+            </div>
+            <div class="message-text" [innerHTML]="formatMessage(message.content)"></div>
+          </div>
+        </div>
+        
+        <div *ngIf="isLoading" class="message assistant-message loading-message">
+          <div class="message-avatar">
+            <!-- <img src="assets/naruto.png" alt="Mark Avatar"> -->
+            <img src="../../../assets/naruto.png" alt="Mark Avatar">
+          </div>
+          <div class="message-content">
+            <div class="message-header">
+              <span class="message-sender">Mark Musk</span>
+            </div>
+            <div class="loading-indicator">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" class="chat-input">
+        <input 
+          type="text" 
+          formControlName="message" 
+          placeholder="Ask anything about CreditChek APIs..."
+          #messageInput
+          (keydown)="onKeydown($event)"
+          [disabled]="!isVectorStoreReady || isLoading">
+        
+        <button 
+          type="submit" 
+          [disabled]="chatForm.invalid || isLoading || !isVectorStoreReady"
+          [title]="!isVectorStoreReady ? 'Knowledge base still loading...' : 'Send message'">
+          <span *ngIf="!isLoading">Send</span>
+          <span *ngIf="isLoading">Sending...</span>
+        </button>
+      </form>
+    </div>
+  </div>
