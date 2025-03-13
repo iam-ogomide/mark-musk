@@ -16,7 +16,7 @@ export interface VectorStoreData {
   providedIn: 'root'
 })
 export class VectorStoreService {
-  private vectorStoreData: VectorStoreData | null = null;
+ private vectorStoreData: VectorStoreData | null = null;
   private vectorStoreReady = new BehaviorSubject<boolean>(false);
   private readonly MODEL_DIMENSIONS = 384; // dimensions for all-MiniLM-L6-v2
 
@@ -25,7 +25,7 @@ export class VectorStoreService {
   }
 
   private loadVectorStore(): void {
-    this.http.get<VectorStoreData>('assets/vector_store/creditchek_vector_store.json')
+    this.http.get<VectorStoreData>('../../assets/vector_store/creditchek_vector_store.json')
       .pipe(
         tap(data => {
           // Validate the data structure

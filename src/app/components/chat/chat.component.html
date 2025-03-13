@@ -21,6 +21,14 @@
         <p>I help developers integrate with CreditChek's REST APIs 10x faster.</p>
         <p>Ask me about endpoints, authentication, parameters, and I'll provide documentation and code examples.</p>
       </div>
+
+      <button 
+  type="button" 
+  (click)="testConnection()" 
+  class="test-button"
+  [disabled]="isLoading || !isVectorStoreReady">
+  Test LM Studio Connection
+</button>
       
       <div class="status-info" [class.ready]="isVectorStoreReady">
         <span class="status-dot"></span>

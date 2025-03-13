@@ -14,7 +14,7 @@ import hljs from 'highlight.js';
 export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   messages: Message[] = [];
-  chatForm: FormGroup;
+  chatForm!: FormGroup;
   isLoading = false;
   preferredLanguage = 'python';
   isVectorStoreReady = false;
@@ -72,18 +72,15 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
     if (this.chatForm.invalid || this.isLoading) {
       return;
     }
+  
+    const message = this.chatForm.value.message.trim();
     
-    const message = this.chatForm.value.message;
-    this.chatService.sendMessage(message, this.preferredLanguage);
-    this.chatForm.reset();
-    
-    // Focus on the input after sending
-    setTimeout(() => {
-      if (this.messageInput) {
-        this.messageInput.nativeElement.focus();
-      }
-    });
+    if (message) {
+      this.chatService.sendMessage(message, this.preferredLanguage);
+      this.chatForm.reset();
+    }
   }
+  
   
   changePreferredLanguage(language: string): void {
     this.preferredLanguage = language;
@@ -131,5 +128,34 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
       this.sendMessage();
     }
   }
+
+  // Add this method to your ChatComponent class
+async testConnection(): Promise<void> {
+  this.isLoading = true;
+  try {
+    const response = await this.chatService.testPromptConnection();
+    console.log("Test successful:", response);
+    // Display the response in the UI
+    this.addTestMessage('Test successful: ' + response);
+  } catch (error) {
+    console.error("Test failed:", error);
+    // Display error in the UI
+    this.addTestMessage('Test failed: ' + (error instanceof Error ? error.message : 'Unknown error'));
+  } finally {
+    this.isLoading = false;
+  }
+}
+
+// Helper method to add test messages
+private addTestMessage(content: string): void {
+  const testMessage: Message = {
+    role: 'assistant',
+    content: content,
+    timestamp: new Date()
+  };
+  this.messages = [...this.messages, testMessage];
+}
+
+
 
 }

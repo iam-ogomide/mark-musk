@@ -1,66 +1,182 @@
-/* src/app/components/home/home.component.scss */
 .home-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f8f9fa;
+  position: relative; /* Allow absolute positioning for shapes */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.content {
+  text-align: center;
+  padding: 2rem;
+  max-width: 800px;
+  z-index: 1; /* Ensure content is on top of shapes */
+}
+
+.title {
+  font-size: 3rem;
+  margin-bottom: 3rem;
+}
+
+.subtitle {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.description {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.start-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.2rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #2980b9;
+  }
+}
+
+.animated-text-reveal {
+  display: inline-block;
+  line-height: 1.2;
+  padding: 0.1rem 0;
+  background-image: linear-gradient(45deg, #3498db, #e74c3c, #9b59b6, #f1c40f);
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: reveal 2s forwards, gradient-flow 3s linear infinite alternate-reverse;
+}
+
+@keyframes reveal {
+  from {
+    clip-path: polygon(0 5%, 0 5%, 0 95%, 0 95%);
   }
   
-  .content {
-    text-align: center;
-    padding: 2rem;
-    max-width: 800px;
+  to {
+    clip-path: polygon(0 0%, 100% 0%, 100% 100%, 0 100%);
+  }
+}
+
+@keyframes gradient-flow {
+  from {
+    background-position: left top;
   }
   
-  .title {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-    color: #2c3e50;
-    margin-bottom: 3rem;
+  to {
+    background-position: right bottom;
+  }
+}
+
+.floating-shapes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.shape {
+  position: absolute;
+  animation: float 5s infinite linear;
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #3498db;
+}
+
+.square {
+  width: 20px;
+  height: 20px;
+  background-color: #e74c3c;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 20px solid #9b59b6;
+}
+
+.small {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #f1c40f;
+}
+
+.small.square {
+  width: 10px;
+  height: 10px;
+}
+
+.small.triangle {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 10px solid #f1c40f;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0);
   }
   
-  .subtitle {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-    color: #3498db;
+  50% {
+    transform: translate(20px, 20px);
   }
   
-  .description {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    color: #7f8c8d;
+  100% {
+    transform: translate(0, 0);
   }
-  
-  .start-btn {
-    padding: 0.75rem 1.5rem;
-    font-size: 1.2rem;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    
-    &:hover {
-      background-color: #2980b9;
-    }
-  }
-  
-  .animated-text {
-    display: inline-block;
-    overflow: hidden;
-    border-right: 0.15em solid #3498db;
-    white-space: nowrap;
-    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-  }
-  
-  @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-  }
-  
-  @keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: #3498db }
-  }
+}
+
+/* Randomize shape positions */
+.shape:nth-child(1) {
+  top: 10%;
+  left: 20%;
+  animation-delay: 0.5s;
+}
+
+.shape:nth-child(2) {
+  top: 30%;
+  left: 50%;
+  animation-delay: 1s;
+}
+
+.shape:nth-child(3) {
+  top: 50%;
+  left: 10%;
+  animation-delay: 1.5s;
+}
+
+.shape:nth-child(4) {
+  top: 20%;
+  left: 60%;
+  animation-delay: 2s;
+}
+
+.shape:nth-child(5) {
+  top: 40%;
+  left: 30%;
+  animation-delay: 2.5s;
+}
+
+.shape:nth-child(6) {
+  top: 60%;
+  left: 40%;
+  animation-delay: 3s;
+}
